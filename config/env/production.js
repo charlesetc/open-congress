@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: "mongodb://heroku_9wzdlnbn:7gpi8fjhugiigb21fa6e4tsgn8@ds035167.mongolab.com:35167/heroku_9wzdlnbn" || process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/open-congress',
+	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.PORT || 'localhost') + '/open-congress',
 	assets: {
 		lib: {
 			css: [
