@@ -1,9 +1,9 @@
-import json, urllib
+import sys, json, urllib
 from geopy import geocoders
 
 gmaps = geocoders.GoogleV3()
 
-API_KEY = 'apikey=55bfc2ea51944ba58364c6f1d84103d1'
+API_KEY = 'in_office=true&apikey=55bfc2ea51944ba58364c6f1d84103d1'
 com_baseURL = 'http://congress.api.sunlightfoundation.com/committees?'
 leg_baseURL = 'http://congress.api.sunlightfoundation.com/legislators?'
 loc_baseURL = 'http://congress.api.sunlightfoundation.com/placeholder/locate?'
@@ -42,3 +42,37 @@ def getAllReps():
 def getCommitteeByID(bio_guideID):
     return json.load(urllib.urlopen(com_baseURL + 'member_ids=' + str(bio_guideID) + '&' + API_KEY))
 
+# gets a random congressman
+def getRandomAny():
+    return None
+
+# gets a random representative in the house
+def getRandomInHouse():
+    return None
+
+# gets a random senator
+def getRandomInSenate():
+    return None
+
+# calls a function earlier in the program
+def main():
+    if len(sys.argv) > 1:
+        funcs = {
+            'getRepsByAddress' : getRepsByAddress,
+            'getRepByName' : getRepByName,
+            'getRepByID' : getRepByID,
+            'getDistrict' : getDistrict,
+            'getAllReps' : getAllReps,
+            'getCommitteeByID' : getCommitteeByID,
+            'getRandomAny' : getRandomAny,
+            'getRandomInHouse':getRandomInHouse,
+            'getRandomInSenate': getRandomInSenate
+        }
+
+        print(funcs[sys.argv[1]](*sys.argv[2:]))
+        return
+
+    print("Ran without parameters")
+
+if __name__ == "__main__":
+    main()
