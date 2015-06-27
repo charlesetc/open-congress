@@ -44,6 +44,7 @@ var UserSchema = new Schema({
 	username: {
 		type: String,
 		trim: true,
+		unique: true,
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
@@ -52,14 +53,14 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true,
 		default: '',
-		validate: [validateLocalStrategyProperty, 'Please fill in your addres']
+		validate: [validateLocalStrategyProperty, 'Please fill in your address']
 	},
 	zip: {
 		type: String,
 		trim: true,
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your zip code'],
-		match: [/\d+(\-\d+)?/, 'Please fill in a valid zip code']
+		match: [/^\d+(\-\d+)?$/, 'Please fill in a valid zip code']
 	},
 	state: {
 		type: String,
