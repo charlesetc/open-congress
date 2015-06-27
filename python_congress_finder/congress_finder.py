@@ -69,7 +69,7 @@ def main():
             'getRandomInSenate': getRandomInSenate
         }
 
-        print(funcs[sys.argv[1]](*sys.argv[2:]))
+        print(json.dumps(funcs[sys.argv[1]](*sys.argv[2:])))
         return
 
     print("Ran without parameters")
