@@ -1,5 +1,5 @@
-import sys, json, urllib
 from geopy import geocoders
+import random, sys, json, urllib
 
 gmaps = geocoders.GoogleV3()
 
@@ -7,6 +7,13 @@ API_KEY = 'in_office=true&apikey=55bfc2ea51944ba58364c6f1d84103d1'
 com_baseURL = 'http://congress.api.sunlightfoundation.com/committees?'
 leg_baseURL = 'http://congress.api.sunlightfoundation.com/legislators?'
 loc_baseURL = 'http://congress.api.sunlightfoundation.com/placeholder/locate?'
+
+all_states = ''' Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District Of Columbia,
+Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts,
+Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York,
+North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,
+South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming'''.split(',')
+
 
 # returns all the congressmen who represent and area given a latitude and longitude
 def get_data_by_loc(lat, long, data_type):
@@ -44,15 +51,20 @@ def getCommitteeByID(bio_guideID):
 
 # gets a random congressman
 def getRandomAny():
-    return None
+    state_name = '%20'.join(random.choice(all_states).split())
+    return random.choice(json.load(urllib.urlopen(leg_baseURL + 'state_name=' + state_name + '&' + API_KEY))['results'])
 
 # gets a random representative in the house
 def getRandomInHouse():
-    return None
+    chamber = '&chamber=house'
+    state_name = '%20'.join(random.choice(all_states).split())
+    return random.choice(json.load(urllib.urlopen(leg_baseURL + 'state_name=' + state_name + chamber + '&' + API_KEY))['results'])
 
 # gets a random senator
 def getRandomInSenate():
-    return None
+    chamber = '&chamber=senate'
+    state_name = '%20'.join(random.choice(all_states).split())
+    return random.choice(json.load(urllib.urlopen(leg_baseURL + 'state_name=' + state_name + chamber + '&' + API_KEY))['results'])
 
 # calls a function earlier in the program
 def main():
