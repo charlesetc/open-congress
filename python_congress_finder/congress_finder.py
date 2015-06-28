@@ -162,7 +162,7 @@ def getBasicQuestion(address):
         for i in range(0, len(out_list)):
             if(out_list[i].get('chamber') == question['chamber']):
                 acc += 1
-        tmplist = list(set(random.sample(range(0, 6), 5)))
+        tmplist = list(set(random.sample(range(0, 5), 6)))
         try:
             tmplist.remove(acc)
         except:
