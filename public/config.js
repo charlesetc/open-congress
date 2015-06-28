@@ -3,7 +3,7 @@
 // Init the application configuration module for AngularJS application
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
-	var applicationModuleName = 'open-congress';
+	var applicationModuleName = 'fun-congress';
 	var applicationModuleVendorDependencies = ['ngResource', 'ngCookies',  'ngAnimate', 'ngMaterial', 'ngTouch',  'ngSanitize',  'ui.router', 'ui.utils'];
 
 	// Add a new vertical module

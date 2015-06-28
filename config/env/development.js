@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = {
-	db: 'mongodb://localhost/open-congress-dev',
+	db: 'mongodb://localhost/fun-congress-dev',
 	app: {
-		title: 'open-congress - Development Environment'
+		title: 'fun-congress - Development Environment'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',

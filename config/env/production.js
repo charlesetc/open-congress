@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.PORT || 'localhost') + '/open-congress',
+	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.PORT || 'localhost') + '/fun-congress',
 	assets: {
 		lib: {
 			css: [

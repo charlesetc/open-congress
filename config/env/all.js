@@ -2,7 +2,7 @@
 
 module.exports = {
 	app: {
-		title: 'open-congress',
+		title: 'fun-congress',
 		description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
 		keywords: 'education'
 	},

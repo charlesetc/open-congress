@@ -13,7 +13,7 @@ var init = require('./config/init')(),
  */
 
 // Bootstrap db connection
-var database_uri = process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.PORT || 'localhost') + '/open-congress';
+var database_uri = process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.PORT || 'localhost') + '/fun-congress';
 var db = mongoose.connect(database_uri, function(err) {
 	if (err) {
 		console.error(chalk.red('Could not connect to MongoDB!'));
