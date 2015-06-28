@@ -36,10 +36,12 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 
           $scope.question = data.question_name;
 					$scope.choices = data.choice_list.slice(0,5);
-          $scope.pics = _.map(data.options, (function (item) { return (item.image); })).slice(0,5);
+          var pics = _.map(data.options, (function (item) { return (item.image); })).slice(0,5);
           if (data.question === 'Which congressman is this?') {
-            $scope.pics = $scope.pics.slice(0,1)
+            pics = pics.slice(0,1);
           }
+          $scope.pics = pics;
+
 					$scope.other_choices = $scope.choices.slice(0);
 
 					shuffle($scope.choices);
