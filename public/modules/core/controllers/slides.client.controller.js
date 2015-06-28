@@ -27,12 +27,12 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 		$scope.other_choices = $scope.choices.slice(0);
 
     $scope.toastPosition = {
-      bottom: false,
-      top: true,
+      bottom: true,
+      top: false,
       left: false,
       right: true
     };
-    
+
       $scope.getToastPosition = function() {
         return Object.keys($scope.toastPosition)
           .filter(function(pos) { return $scope.toastPosition[pos]; })
