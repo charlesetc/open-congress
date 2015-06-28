@@ -1,58 +1,51 @@
 <div class="container" data-ng-controller="HeaderController">
-	<div class="navbar-header">
-		<button class="navbar-toggle" type="button" data-ng-click="toggleCollapsibleMenu()">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</button>
-		<a href="/#!/" class="navbar-brand">Open-Congress</a>
-	</div>
-	<nav class="collapse navbar-collapse" collapse="!isCollapsed" role="navigation">
-		<ul class="nav navbar-nav" data-ng-if="menu.shouldRender(authentication.user);">
-			<li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
-				<a ng-switch-when="dropdown" class="dropdown-toggle">
-					<span data-ng-bind="item.title"></span>
-					<b class="caret"></b>
-				</a>
-				<ul ng-switch-when="dropdown" class="dropdown-menu">
-					<li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
-						<a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
-					</li>
-				</ul>
-				<a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
-			</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
-			<li ui-route="/signup" ng-class="{active: $uiRoute}">
-				<a href="/#!/signup">Sign Up</a>
-			</li>
-			<li class="divider-vertical"></li>
-			<li ui-route="/signin" ng-class="{active: $uiRoute}">
-				<a href="/#!/signin">Sign In</a>
-			</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					<span data-ng-bind="authentication.user.displayName"></span> <b class="caret"></b>
-				</a>
-				<ul class="dropdown-menu">
-					<li>
-						<a href="/#!/settings/profile">Edit Profile</a>
-					</li>
-					<li>
-						<a href="/#!/settings/accounts">Manage Social Accounts</a>
-					</li>
-					<li data-ng-show="authentication.user.provider === 'local'">
-						<a href="/#!/settings/password">Change Password</a>
-					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="/auth/signout">Signout</a>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</nav>
+
+
+    <md-toolbar class="md-toolbar-home md-default-theme" >
+        <div class="md-toolbar-tools">
+            <a href="/#!/"> <h2>Open-Congress</h2> </a>
+
+            <md-button ng-repeat="breadcrumb in breadcrumbs" ng-href="{{breadcrumb.link}}">{{breadcrumb.title}} <md-icon md-svg-icon="lib/project-material-icons/ic_chevron_right_48px.svg" ng-hide="$last"></md-icon><md-icon md-svg-icon="" ng-show="$last"></md-icon></md-button>
+            <span flex></span>
+
+            <section data-ng-hide="authentication.user">
+                <md-button class = "header_button_txt" href="/#!/signin" data-ng-hide="isSignin"> SIGN IN </h2> </md-button>
+            </section>
+
+            <section data-ng-show="authentication.user">
+                <md-button class = "header_button_txt" ng-click="toggleRight()" data-ng-bind="authentication.user.displayName"> </md-button>
+            </section>
+        </div>
+    </md-toolbar>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2 header_button_txt" md-component-id="right">
+        <md-toolbar class="md-theme-light">
+            <h1 class="md-toolbar-tools">Profile</h1>
+        </md-toolbar>
+        <md-content class="md-padding">
+            <md-subheader class="md-no-sticky" data-ng-bind="authentication.user.displayName"></md-subheader>
+            <md-list-item>
+                <md-button ng-click="editProfile()" class="md-primary">
+                    Edit Profile
+                </md-button>
+            </md-list-item>
+            <md-list-item>
+                <md-button ng-click="updatePword()" class="md-primary">
+                    Update Password
+                </md-button>
+            </md-list-item>
+
+            <md-subheader class="md-no-sticky">Application</md-subheader>
+            <md-list-item>
+                <md-button ng-click="toggleRight()" class="md-primary">
+                    Return
+                </md-button>
+            </md-list-item>
+            <md-list-item>
+                <md-button ng-click="signout()" class="md-primary">
+                    Sign Out
+                </md-button>
+            </md-list-item>
+        </md-content>
+    </md-sidenav>
 </div>
