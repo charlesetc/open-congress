@@ -1,12 +1,16 @@
 from geopy import geocoders
+from bs4 import BeautifulSoup
 import random, sys, json, urllib
 
 gmaps = geocoders.GoogleV3()
 
 API_KEY = 'in_office=true&apikey=55bfc2ea51944ba58364c6f1d84103d1'
+
 com_baseURL = 'http://congress.api.sunlightfoundation.com/committees?'
 leg_baseURL = 'http://congress.api.sunlightfoundation.com/legislators?'
 loc_baseURL = 'http://congress.api.sunlightfoundation.com/placeholder/locate?'
+
+govtrack_baseURL = 'https://www.govtrack.us/congress/members/'
 
 all_states = ''' Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District Of Columbia,
 Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts,
@@ -66,6 +70,15 @@ def getRandomInSenate():
     state_name = '%20'.join(random.choice(all_states).split())
     return random.choice(json.load(urllib.urlopen(leg_baseURL + 'state_name=' + state_name + chamber + '&' + API_KEY))['results'])
 
+# gets the image of a congressman or senator by their ID
+def getImageByID(bio_guideID):
+    #soup = BeautifulSoup()
+    curOfficial = getRepByID(bio_guideID)['results'][0]
+    soup = BeautifulSoup(urllib.urlopen(govtrack_baseURL + str(curOfficial['govtrack_id'])))
+    return {'image' : 'https://www.govtrack.us' + soup.find('img', attrs = {'class': 'img-responsive'}).get('src')}
+
+
+
 # calls a function earlier in the program
 def main():
     if len(sys.argv) > 1:
@@ -78,7 +91,8 @@ def main():
             'getCommitteeByID' : getCommitteeByID,
             'getRandomAny' : getRandomAny,
             'getRandomInHouse':getRandomInHouse,
-            'getRandomInSenate': getRandomInSenate
+            'getRandomInSenate': getRandomInSenate,
+            'getImageByID' : getImageByID
         }
 
         print(json.dumps(funcs[sys.argv[1]](*sys.argv[2:])))
