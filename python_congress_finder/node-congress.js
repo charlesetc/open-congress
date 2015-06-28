@@ -13,8 +13,7 @@
     running = "python2 ~/Sandbox/open-congress/python_congress_finder/congress_finder.py " + command;
     for (j = 0, len = args.length; j < len; j++) {
       a = args[j];
-      running += " ";
-      running += a;
+      running += " \"" + a + "\"";
     }
     return exec(running, function(error, stdout, stderr) {
       if (error) {

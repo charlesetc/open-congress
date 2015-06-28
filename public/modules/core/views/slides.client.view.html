@@ -4,13 +4,10 @@
   <md-card>
     <md-card-content id="content" style='height:50vh;'>
 
-      <md-toolbar class="md-warn">Who is your Senator?</md-toolbar>
+      <md-toolbar ng-bind='question' class="md-warn"></md-toolbar>
 
       <md-radio-group ng-model="choice" id ="choices">
-        <md-radio-button value="0">Apple</md-radio-button>
-        <md-radio-button value="1"> Banana</md-radio-button>
-        <md-radio-button value="2">Mango</md-radio-button>
-        <md-radio-button value="3" correct="true">Mango</md-radio-button>
+        <md-radio-button ng-repeat="item in choices" value="{{other_choices.indexOf(item)}}">{{item}}</md-radio-button>
       </md-radio-group>
 
     </md-card-content>
