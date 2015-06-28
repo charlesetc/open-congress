@@ -26,3 +26,5 @@
   exports.finder = finder;
 
 }).call(this);
+
+//# sourceMappingURL=node-congress.js.map
