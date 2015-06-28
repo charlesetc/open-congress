@@ -1,0 +1,19 @@
+{% extends 'layout.server.view.html' %}
+
+{% block content %}
+	<section data-ui-view>
+		<h1>{{official.title +
+			". " + official.first_name +
+			" " + official.middle_name +
+			" " + official.last_name}}
+			<bold style='color:{{color}};'>{{official.party}}</bold></h1>
+		<ul id='information'>
+			<li id="state">State: {{official.state_name}}</li>
+			<li id="office">Office: {{official.office}}</li>
+			<li id="website">Website: {{official.website}}</li>
+			<li id="contact_form">Contact Form: {{official.contact_form}}</li>
+			<li id="phone">Phone: {{official.phone}}</li>
+			<li id="term_end">End of Term: {{official.term_end}}</li>
+		</ul>
+	</section>
+{% endblock %}

@@ -1,8 +1,8 @@
 sys = require 'sys'
 exec = require('child_process').exec
 
-congress = (command, args..., callback) ->
-  running = "python2 ./congress_finder.py #{command}"
+finder = (command, args..., callback) ->
+  running = "python2 ~/Sandbox/open-congress/python_congress_finder/congress_finder.py #{command}"
   for a in args
     running += " "
     running += a
@@ -10,6 +10,4 @@ congress = (command, args..., callback) ->
     console.log error if error
     callback JSON.parse stdout
 
-congress "getAllReps", (object) ->
-  console.log JSON.stringify object
-
+exports.finder = finder
