@@ -1,11 +1,7 @@
 <div class="container" data-ng-controller="HeaderController">
-
-
     <md-toolbar class="md-toolbar-home md-default-theme" >
-        <div class="md-toolbar-tools">
+        <div class="md-toolbar-tools main_header">
             <a href="/#!/"> <h2>Open-Congress</h2> </a>
-
-            <md-button ng-repeat="breadcrumb in breadcrumbs" ng-href="{{breadcrumb.link}}">{{breadcrumb.title}} <md-icon md-svg-icon="lib/project-material-icons/ic_chevron_right_48px.svg" ng-hide="$last"></md-icon><md-icon md-svg-icon="" ng-show="$last"></md-icon></md-button>
             <span flex></span>
 
             <section data-ng-hide="authentication.user">

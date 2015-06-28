@@ -1,33 +1,32 @@
 <section data-ng-controller="DonateController">
-	<section data-ui-view>
 		<h1>Donate to Open-Congress</h1>
 		<p>
-			Thanks to <span style="background:#eee;font-family:courier;
-			font-size:12px;padding:4px;border-radius:3px;font-weight:bold;">
+			Thanks to <span class = "braintree_dev">
 				braintree_dev</span>, we are able to be funded by people like you!
 		</p>
 
-		<pre>
-			Honestly, they are the greatest people. I know the corporate system is flawed and all,
-			but you should really go out of your way to use either paypal or <span style="background:#eee;font-family:courier;
-			font-size:12px;padding:4px;border-radius:3px;font-weight:bold;">braintree_dev</span>!
-				<br />
-				They're wonderful!
-				Charles Chamberlain &amp; Christopher Walker
-		</pre>
+		<md-card style = "background-color: lightgrey">
+		    <pre>
+			    Honestly, they are the greatest people. I know the corporate system is flawed and all,
+			    but you should really go out of your way to use either paypal or <span class = "braintree_dev">braintree_dev</span>
+				    <br />
+				    They're wonderful!
+				    Charles Chamberlain &amp; Christopher Walker
+		    </pre>
+        </md-card>
 
 
 
 		<!-- Drop In Form -->
 		<form id="checkout" method="post" action="/checkout">
-	  <div id="payment-form"></div>
-	  <input type="submit" value="Pay $10">
-		</form>
+	    <div id="payment-form"></div>
+            <md-button type="submit" value="Pay $10"> Pay $10 </md-button>
+        </form>
 
 		<!-- <script>
 		// braintree.setup(clientToken, "dropin", {
 		//   container: "payment-form"
 		// });
 		// </script> -->
-	</section>
 </section>
+
