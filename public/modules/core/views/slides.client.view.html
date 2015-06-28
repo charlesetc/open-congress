@@ -8,7 +8,8 @@
 
       <ul id='images'>
         <li ng-repeat="item in pics">
-          <img ng-src="{{item || 'http://blog.cvsflags.com/wp-content/uploads/2013/03/US-flag-Florida-Bridge.jpg'}}" src="" alt="" />
+          <img ng-src="{{item.image || 'http://blog.cvsflags.com/wp-content/uploads/2013/03/US-flag-Florida-Bridge.jpg'}}" src=""/>
+          <span ng-hide='no_name'>{{item.name}}</span>
         </li>
       </ul>
 

@@ -27,6 +27,7 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 		$scope.other_choices = $scope.choices.slice(0);
 
 		$scope.checkCorrect = function() {
+      $scope.no_name = false;
 			if ('0' === $scope.choice) {
 				times++;
         $scope.color = "true";
@@ -38,9 +39,15 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 					// shuffle($scope.choices);s
           $scope.question = data.question_name;
 					$scope.choices = data.choice_list.slice(0,5);
-          var pics = _.map(data.options, (function (item) { return (item.image); })).slice(0,5);
+          var pics = _.map(data.options, (function (item) {
+            var output = {};
+            output.name = item.first_name + ' ' + item.last_name;
+            output.image = item.image;
+            return output;
+          })).slice(0,5);
           if (data.question_name === 'Which congressman is this?') {
             pics = pics.slice(0,1);
+            $scope.no_name = true;
           }
           $scope.pics = pics;
 
