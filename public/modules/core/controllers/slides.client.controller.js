@@ -32,7 +32,7 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 				$http.get('/congress/getBasicQuestion/' + address)
 				.success(function (data,status,headers,config) {
 					console.log(JSON.stringify(data));
-					shuffle($scope.choices);
+					// shuffle($scope.choices);
 
           $scope.question = data.question_name;
 					$scope.choices = data.choice_list.slice(0,5);
