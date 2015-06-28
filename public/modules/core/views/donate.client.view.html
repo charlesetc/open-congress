@@ -1,6 +1,4 @@
-{% extends 'layout.server.view.html' %}
-
-{% block content %}
+<section data-ng-controller="DonateController">
 	<section data-ui-view>
 		<h1>Donate to Open-Congress</h1>
 		<p>
@@ -26,11 +24,10 @@
 	  <input type="submit" value="Pay $10">
 		</form>
 
-		 <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
 		<!-- <script>
 		// braintree.setup(clientToken, "dropin", {
 		//   container: "payment-form"
 		// });
 		// </script> -->
 	</section>
-{% endblock %}
+</section>
