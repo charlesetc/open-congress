@@ -13,9 +13,14 @@ exports.index = function(req, res) {
 
 exports.congress = function(req, res) {
 	if (req.params.last_name) {
-		congress.finder(req.params.command, req.params.arg, req.paramas.last_name,
+		congress.finder(req.params.command, req.params.arg, req.params.last_name,
 			function (result) {
 				res.json(result.results)
+			});
+	} else if (req.params.arg) {
+		congress.finder(req.params.command, req.params.arg,
+			function(result) {
+				res.json(result);
 			});
 	} else {
 		congress.finder(req.params.command, req.params.arg,

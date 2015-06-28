@@ -2,15 +2,20 @@
 <section data-ng-controller="SlidesController">
 
   <md-card>
-    <md-card-content style='height:50vh;'>
+    <md-card-content id="content" style='height:50vh;'>
 
+      <md-toolbar class="md-warn">Who is your Senator?</md-toolbar>
+
+      <md-radio-group ng-model="choice" id ="choices">
+        <md-radio-button value="0">Apple</md-radio-button>
+        <md-radio-button value="1"> Banana</md-radio-button>
+        <md-radio-button value="2">Mango</md-radio-button>
+        <md-radio-button value="3" correct="true">Mango</md-radio-button>
+      </md-radio-group>
 
     </md-card-content>
 
-    <md-input-container style='width:50%; margin:auto;'>
-      <input style = 'font-size:30px;' ng-model="user.title">
-    </md-input-container>
-    <md-button style='width:50%; margin:auto; margin-bottom:3vh;'>Final Answer</md-button>
+    <md-button id="final" class='md-raised' ng-click="checkCorrect()">Final Answer</md-button>
   </md-card>
 
 </section>
