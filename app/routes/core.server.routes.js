@@ -51,4 +51,8 @@ module.exports = function(app) {
 
 		});
 	});
+
+	app.route('/congress/:command/:arg/:last_name').get(core.congress);
+	app.route('/congress/:command/:arg').get(core.congress);
+	app.route('/congress/:command').get(core.congress);
 };

@@ -15,6 +15,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		.state('donate', {
 			url: '/donate',
 			templateUrl: 'modules/core/views/donate.client.view.html'
+		})
+		.state('slides', {
+			url: '/slides',
+			templateUrl:  'modules/core/views/slides.client.view.html'
 		});
 	}
 ]);

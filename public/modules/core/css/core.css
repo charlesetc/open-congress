@@ -2,8 +2,19 @@
 
 }
 
-.body{
+md-toolbar.md-warn {
+	border-radius:5px;
+	line-height: 100px;
+	text-align: center;
+	font-size: 30px;
+	background-color: #330066;
+	box-shadow: 0px -3px 10px darkgray;
+}
 
+#final {
+	width:50%; margin:auto; margin-bottom:3vh;
+	font-size:30px;
+	padding:20px 10px;
 }
 
 .undecorated-link:hover {
