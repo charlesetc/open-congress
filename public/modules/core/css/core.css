@@ -15,16 +15,17 @@ md-toolbar.md-warn {
 	margin: 5px;
 }
 
-#images li img::after {
-	content: attr('alt');
+#images li span {
 	width: 200px;
-	box-sizing: border-box;
 	display:block;
 	height:40px;
 	color: white;
 	background: rgba(0,0,0,0.7);
-	position: absolute;
-	bottom: 20px;
+	position: relative;
+	line-height: 40px;
+	top: -55px;
+	text-align:center;
+	left:10px;
 }
 
 .green {
