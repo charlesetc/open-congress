@@ -176,7 +176,7 @@ def getBasicQuestion(address):
     return {
         'type' : 'basic',
         'answer_type' : question['answer_type'],
-        'choice_list' : str(choice_list),
+        'choice_list' : choice_list,
         'question_name': question['name'],
         'options' : out_list
     }
