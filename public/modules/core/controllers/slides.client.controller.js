@@ -9,8 +9,8 @@ function shuffle(o) {
 
 
 // Random Jquery function
-angular.module('core').controller('SlidesController', ['$scope', '$document', '$http', 'Authentication',
-	function($scope, $document, $http, Authentication) {
+angular.module('core').controller('SlidesController', ['$scope', '$document', '$http', '$mdToast', 'Authentication',
+	function($scope, $document, $http, $mdToast, Authentication) {
 		$scope.authentication = Authentication;
 
 		$scope.question = 'Are you ready to play?';
@@ -26,9 +26,41 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
     $scope.pics = []
 		$scope.other_choices = $scope.choices.slice(0);
 
+    $scope.toastPosition = {
+      bottom: false,
+      top: true,
+      left: false,
+      right: true
+    };
+    
+      $scope.getToastPosition = function() {
+        return Object.keys($scope.toastPosition)
+          .filter(function(pos) { return $scope.toastPosition[pos]; })
+          .join(' ');
+      };
+
+    $scope.correctToast = function() {
+  $mdToast.show(
+    $mdToast.simple()
+      .content('Correct!')
+      .position($scope.getToastPosition())
+      .hideDelay(3000)
+    );
+  };
+
+  $scope.wrongToast = function() {
+  $mdToast.show(
+  $mdToast.simple()
+    .content('Wrong :(')
+    .position($scope.getToastPosition())
+    .hideDelay(3000)
+  );
+  };
+
 		$scope.checkCorrect = function() {
       $scope.no_name = false;
 			if ('0' === $scope.choice) {
+        $scope.correctToast();
 				times++;
         $scope.color = "true";
         setTimeout((function () { $scope.color = null }), 300)
@@ -62,7 +94,7 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 
 
 			} else {
-				// Not the right answer...
+          $scope.wrongToast();
 			}
 		}
 	}
