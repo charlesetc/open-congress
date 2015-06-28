@@ -12,14 +12,38 @@ loc_baseURL = 'http://congress.api.sunlightfoundation.com/placeholder/locate?'
 
 govtrack_baseURL = 'https://www.govtrack.us/congress/members/'
 
-all_states = ''' Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District Of Columbia,
+all_states = '''Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, District Of Columbia,
 Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts,
 Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York,
 North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,
 South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming'''.split(',')
 
-questions = ['who is your senator?', 'which congressman is this?', 'who is your representative?', 'how many of these officials are in the house?',
-            'how many of these officials are in the senate?']
+questions = [{'name' : 'Who is your senator?',
+              'type' : 'senate',
+              'answer_type' : 'string',
+              'num' : '10'},
+
+              {'name': 'Which congressman is this?',
+              'type' : 'house',
+              'answer_type' : 'string',
+              'num' : '10'},
+
+              {'name' : 'Who is your public official?',
+                'answer_type' : 'string',
+                'type' : None,
+                'num' : '10'},
+
+              {'name' : 'How many of these officials are in the house?',
+              'answer_type' : 'number',
+              'chamber':'house',
+               'type' : None,
+               'num' : '10'},
+
+              {'name' : 'How many of these officials are in the senate?',
+              'answer_type' : 'number',
+              'chamber' : 'senate',
+               'type' : None,
+               'num' : '10'}]
 
 
 # returns all the congressmen who represent and area given a latitude and longitude
@@ -59,19 +83,28 @@ def getCommitteeByID(bio_guideID):
 # gets a random congressman
 def getRandomAny():
     state_name = '%20'.join(random.choice(all_states).split())
-    return random.choice(json.load(urllib.urlopen(leg_baseURL + 'state_name=' + state_name + '&' + API_KEY))['results'])
+    try:
+        return random.choice(json.load(urllib.urlopen(leg_baseURL + 'state_name=' + state_name + '&' + API_KEY))['results'])
+    except:
+        return getRandomAny()
 
 # gets a random representative in the house
 def getRandomInHouse():
     chamber = '&chamber=house'
     state_name = '%20'.join(random.choice(all_states).split())
-    return random.choice(json.load(urllib.urlopen(leg_baseURL + 'state_name=' + state_name + chamber + '&' + API_KEY))['results'])
+    try:
+        return random.choice(json.load(urllib.urlopen(leg_baseURL + 'state_name=' + state_name + chamber + '&' + API_KEY))['results'])
+    except:
+        return getRandomInHouse()
 
 # gets a random senator
 def getRandomInSenate():
     chamber = '&chamber=senate'
     state_name = '%20'.join(random.choice(all_states).split())
-    return random.choice(json.load(urllib.urlopen(leg_baseURL + 'state_name=' + state_name + chamber + '&' + API_KEY))['results'])
+    try:
+        return random.choice(json.load(urllib.urlopen(leg_baseURL + 'state_name=' + state_name + chamber + '&' + API_KEY))['results'])
+    except:
+        return getRandomInSenate()
 
 # gets the image of a congressman or senator by their ID
 def getImageByID(bio_guideID):
@@ -81,11 +114,71 @@ def getImageByID(bio_guideID):
     return {'image' : 'https://www.govtrack.us' + soup.find('img', attrs = {'class': 'img-responsive'}).get('src')}
 
 
-def getBasicQuestion():
+def filterDictByElement(in_list, key):
+    out_list = []
+    for i in range(0, len(in_list)):
+        if(in_list[i].get('chamber') == key):
+            out_list.append(in_list[i])
+    return out_list
+
+# gets a question session, first result is correct by convention
+def getBasicQuestion(address):
     question = random.choice(questions)
+    correct_answer = None
+    curFunc = None
+    if(question['type'] == 'house'):
+        correct_answer = filterDictByElement(getRepsByAddress(address)['results'], 'house')[0]
+        curFunc = getRandomInHouse
+    elif(question['type'] == 'senate'):
+        correct_answer = filterDictByElement(getRepsByAddress(address)['results'], 'senate')[0]
+        curFunc = getRandomInSenate
+    else:
+        correct_answer = getRepsByAddress(address)['results'][0]
+        curFunc = getRandomAny
+
+    options = [correct_answer]
+
+    for i in range(0, int(question['num']) - 1):
+        options.append(curFunc())
+
+    #options = list(set(options))
+
+    out_list = []
+    for i in range(0, len(options)):
+        tmp_dict = {}
+        tmp_dict = {
+            'first_name' : options[i].get('first_name'),
+            'last_name' : options[i].get('last_name'),
+            'chamber' : options[i].get('chamber'),
+            'id' : options[i].get('bioguide_id')
+        }
+        tmp_dict['image'] = 'https://www.govtrack.us/data/photos/' + options[i].get('govtrack_id') + '-200px.jpeg'
+        out_list.append(tmp_dict)
+
+        choice_list = []
+
+    if question['answer_type'] == 'number':
+        acc = 0
+        for i in range(0, len(out_list)):
+            if(out_list[i].get('chamber') == question['chamber']):
+                acc += 1
+        tmplist = list(set(random.sample(range(1, 8), 5)))
+        try:
+            tmplist.remove(acc)
+        except:
+            pass
+        random.shuffle(tmplist)
+        choice_list = [acc] + tmplist
+    else:
+        for i in range(0, len(out_list)):
+            choice_list.append(out_list[i].get('first_name') + ', ' + out_list[i].get('last_name'))
+
     return {
         'type' : 'basic',
-        'question': question,
+        'answer_type' : question['answer_type'],
+        'choice_list' : str(choice_list),
+        'question_name': question['name'],
+        'options' : out_list
     }
 
 
@@ -102,7 +195,8 @@ def main():
             'getRandomAny' : getRandomAny,
             'getRandomInHouse':getRandomInHouse,
             'getRandomInSenate': getRandomInSenate,
-            'getImageByID' : getImageByID
+            'getImageByID' : getImageByID,
+            'getBasicQuestion' : getBasicQuestion
         }
 
         print(json.dumps(funcs[sys.argv[1]](*sys.argv[2:])))
