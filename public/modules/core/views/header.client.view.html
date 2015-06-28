@@ -5,7 +5,8 @@
             <span flex></span>
 
             <section data-ng-hide="authentication.user">
-                <md-button class = "header_button_txt" href="/#!/signin" data-ng-hide="isSignin"> SIGN IN </h2> </md-button>
+                <div><md-button class = "header_button_txt" href="/#!/signin" data-ng-hide="isSignin"> SIGN IN</md-button>
+                    <md-button class = "header_button_txt" href="/#!/signup"> SIGN UP </h2> </md-button></div>
             </section>
 
             <section data-ng-show="authentication.user">
