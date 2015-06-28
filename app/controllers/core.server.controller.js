@@ -11,6 +11,7 @@ exports.index = function(req, res) {
 	});
 };
 
+
 exports.official_profile = function(req, res) {
 	var id = req.params.id;
 	congress.finder("getRepByID", id, function (result) {
@@ -34,6 +35,13 @@ exports.official_profile = function(req, res) {
 	});
 };
 
+
+exports.donate = function (req, res) {
+	res.render('donate', {
+		user: req.user || null,
+		request: req
+	})
+};
 
 // exports.official_profile = function(req, res) {
 //
