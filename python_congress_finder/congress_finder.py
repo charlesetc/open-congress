@@ -37,13 +37,13 @@ questions = [{'name' : 'Who is your senator?',
               'answer_type' : 'number',
               'chamber':'house',
                'type' : None,
-               'num' : '10'},
+               'num' : '5'},
 
               {'name' : 'How many of these officials are in the senate?',
               'answer_type' : 'number',
               'chamber' : 'senate',
                'type' : None,
-               'num' : '10'}]
+               'num' : '5'}]
 
 
 # returns all the congressmen who represent and area given a latitude and longitude
