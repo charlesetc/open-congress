@@ -6,27 +6,6 @@ function shuffle(o) {
     for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;
 }
-function refresh(scope, http) {
-	return function() {
-		if (correct === scope.choice) {
-
-			http.get('/congress/getQuestion/' + times)
-			.success(function (data,status,headers,config) {
-				console.log(JSON.stringify(data));
-				shuffle($scope.choices);
-
-				alert("Well Done");
-			})
-			.error(function (data,status,headers,config) {
-				console.log("ERROR");
-				console.log(JSON.stringify(data));
-			});
-
-			scope.choices = data.choices;
-			scope.other_choices = $scope.choices.slice(0);
-		}
-	}
-}
 
 
 // Random Jquery function

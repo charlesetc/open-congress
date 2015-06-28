@@ -1,16 +1,26 @@
+
+
 <div class="container" data-ng-controller="HeaderController">
     <md-toolbar class="md-toolbar-home md-default-theme" >
         <div class="md-toolbar-tools main_header">
-            <a href="/#!/"> <h2>Fun-Congress</h2> </a>
+            <a href="/#!/"> <h2>Fun Congress</h2> </a>
             <span flex></span>
 
             <section data-ng-hide="authentication.user">
-                <div><md-button class = "header_button_txt" href="/#!/signin" data-ng-hide="isSignin"> SIGN IN</md-button>
-                    <md-button class = "header_button_txt" href="/#!/signup"> SIGN UP </h2> </md-button></div>
+              <div>
+                <md-button class = "header_button_txt" href="/#!/donate">Donate</md-button>
+                <md-button class = "header_button_txt" href="/#!/signin" data-ng-hide="isSignin">Log In</md-button>
+                <md-button class = "header_button_txt" href="/#!/signup">Sign Up</h2> </md-button>
+              </div>
             </section>
 
             <section data-ng-show="authentication.user">
-                <md-button class = "header_button_txt" ng-click="toggleRight()" data-ng-bind="authentication.user.displayName"> </md-button>
+              <div>
+                <md-button style="position:relative;top:9px;" class = "header_button_txt" href="/#!/donate">Donate</md-button>
+                <md-button style="position:relative;top:9px;" class = "header_button_txt" href="/#!/slides">Play</md-button>
+                <md-button style="position:relative;top:-5px;" class = "header_button_txt" ng-click="toggleRight()"
+                data-ng-bind="authentication.user.displayName"></md-button>
+              </div>
             </section>
         </div>
     </md-toolbar>
@@ -32,7 +42,7 @@
                 </md-button>
             </md-list-item>
 
-            <md-subheader class="md-no-sticky">Application</md-subheader>
+            <md-subheader style="position:relative;left:-13px;" class="md-no-sticky">Application</md-subheader>
             <md-list-item>
                 <md-button ng-click="toggleRight()" class="md-primary">
                     Return

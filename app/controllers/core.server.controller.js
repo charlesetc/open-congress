@@ -7,7 +7,8 @@ var congress = require('../../python_congress_finder/node-congress.js');
 exports.index = function(req, res) {
 	res.render('index', {
 		user: req.user || null,
-		request: req
+		request: req,
+		this_is_home: 'true'
 	});
 };
 
