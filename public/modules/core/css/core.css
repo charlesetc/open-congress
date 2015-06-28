@@ -15,6 +15,11 @@ md-toolbar.md-warn {
 	margin: 5px;
 }
 
+.text-danger {
+	color: red;
+	font-size:20px;
+}
+
 #images li {
 	list-style-type: none;
 	display: inline-block;
