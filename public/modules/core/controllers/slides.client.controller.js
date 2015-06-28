@@ -19,6 +19,7 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 
 		console.log(user);
 
+
 		var address = user.address + " " + user.city + ", " + user.state + " " + user.zip;
 
 		$scope.choices = ['Yes', 'No'];
@@ -28,16 +29,17 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 		$scope.checkCorrect = function() {
 			if ('0' === $scope.choice) {
 				times++;
+        $scope.color = "true";
+        setTimeout((function () { $scope.color = null }), 300)
 
 				$http.get('/congress/getBasicQuestion/' + address)
 				.success(function (data,status,headers,config) {
 					console.log(JSON.stringify(data));
-					// shuffle($scope.choices);
-
+					// shuffle($scope.choices);s
           $scope.question = data.question_name;
 					$scope.choices = data.choice_list.slice(0,5);
           var pics = _.map(data.options, (function (item) { return (item.image); })).slice(0,5);
-          if (data.question === 'Which congressman is this?') {
+          if (data.question_name === 'Which congressman is this?') {
             pics = pics.slice(0,1);
           }
           $scope.pics = pics;
@@ -52,7 +54,6 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 				});
 
 
-				alert("Well Done");
 			} else {
 				// Not the right answer...
 			}

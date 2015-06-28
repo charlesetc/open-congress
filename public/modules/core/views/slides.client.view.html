@@ -8,7 +8,7 @@
 
       <ul id='images'>
         <li ng-repeat="item in pics">
-          <img ng-src="{{item}}" src="" alt="" />
+          <img ng-src="{{item || 'http://blog.cvsflags.com/wp-content/uploads/2013/03/US-flag-Florida-Bridge.jpg'}}" src="" alt="" />
         </li>
       </ul>
 
@@ -17,9 +17,12 @@
          value="{{other_choices.indexOf(item)}}">{{item}}</md-radio-button>
       </md-radio-group>
 
+
     </md-card-content>
 
-    <md-button id="final" class='md-raised' ng-click="checkCorrect()">Final Answer</md-button>
+    <md-button ng-class="stylecolor"  id="final" class='md-raised' ng-click="checkCorrect()">
+      Final Answer</md-button>
   </md-card>
+
 
 </section>
