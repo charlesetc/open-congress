@@ -11,6 +11,20 @@ exports.index = function(req, res) {
 	});
 };
 
+exports.congress = function(req, res) {
+	if (req.params.last_name) {
+		congress.finder(req.params.command, req.params.arg, req.paramas.last_name,
+			function (result) {
+				res.json(result.results)
+			});
+	} else {
+		congress.finder(req.params.command, req.params.arg,
+			function(result) {
+				res.json(result);
+			});
+	}
+}
+
 
 exports.official_profile = function(req, res) {
 	var id = req.params.id;

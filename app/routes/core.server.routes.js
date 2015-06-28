@@ -51,4 +51,6 @@ module.exports = function(app) {
 
 		})
 	});
+
+	app.route('/congress/:command/:arg').get(core.congress)
 };
