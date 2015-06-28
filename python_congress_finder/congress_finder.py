@@ -123,6 +123,7 @@ def filterDictByElement(in_list, key):
 
 # gets a question session, first result is correct by convention
 def getBasicQuestion(address):
+    acc = 0
     question = random.choice(questions)
     correct_answer = None
     curFunc = None
@@ -162,7 +163,7 @@ def getBasicQuestion(address):
         for i in range(0, len(out_list)):
             if(out_list[i].get('chamber') == question['chamber']):
                 acc += 1
-        tmplist = list(set(random.sample(range(0, 5), 6)))
+        tmplist = list(set(random.sample(range(0, 5), 5)))
         try:
             tmplist.remove(acc)
         except:

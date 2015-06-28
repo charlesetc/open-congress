@@ -8,6 +8,18 @@ md-toolbar.md-warn {
 	box-shadow: 0px -3px 10px darkgray;
 }
 
+#images img {
+	border:5px solid white;
+	box-shadow: 0px 2px 8px darkgrey;
+	max-width:200px;
+	margin: 5px;
+}
+
+#images li {
+	list-style-type: none;
+	display: inline-block;
+}
+
 .medium {
 	width: 80%;
 	margin:auto;

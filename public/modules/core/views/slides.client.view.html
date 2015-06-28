@@ -2,12 +2,19 @@
 <section class = 'medium' data-ng-controller="SlidesController">
 
   <md-card>
-    <md-card-content id="content" style='height:50vh;'>
+    <md-card-content id="content" style='min-height:50vh;'>
 
       <md-toolbar ng-bind='question' class="md-warn"></md-toolbar>
 
+      <ul id='images'>
+        <li ng-repeat="item in pics">
+          <img ng-src="{{item}}" src="" alt="" />
+        </li>
+      </ul>
+
       <md-radio-group ng-model="choice" id ="choices">
-        <md-radio-button ng-repeat="item in choices" value="{{other_choices.indexOf(item)}}">{{item}}</md-radio-button>
+        <md-radio-button ng-repeat="item in choices"
+         value="{{other_choices.indexOf(item)}}">{{item}}</md-radio-button>
       </md-radio-group>
 
     </md-card-content>
