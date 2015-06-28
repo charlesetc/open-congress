@@ -1,5 +1,5 @@
 'use strict';
-var congress = require("../../python_congress_finder/node-congress.js")
+var congress = require('../../python_congress_finder/node-congress.js');
 
 /**
  * Module dependencies.
@@ -14,16 +14,16 @@ exports.index = function(req, res) {
 
 exports.official_profile = function(req, res) {
 	var id = req.params.id;
-	congress.finder("getRepByID", id, function (result) {
+	congress.finder('getRepByID', id, function (result) {
 		console.log(JSON.stringify(result));
 		var official = result.results[0];
 		var color;
-		if (official.party === "R") {
-			color = "red";
-		} else if (official.party === "D") {
-			color = "blue";
+		if (official.party === 'R') {
+			color = 'red';
+		} else if (official.party === 'D') {
+			color = 'blue';
 		} else {
-			color = "gray";
+			color = 'gray';
 		}
 		res.render('official_profile', {
 			user: req.user || null,
@@ -40,7 +40,7 @@ exports.donate = function (req, res) {
 	res.render('donate', {
 		user: req.user || null,
 		request: req
-	})
+	});
 };
 
 // exports.official_profile = function(req, res) {

@@ -28,7 +28,7 @@ module.exports = function(app) {
 
 	app.route('/client_token').get(function (req, res) {
 		gateway.clientToken.generate({}, function (err, response) {
-			if (err != null) {
+			if (err !== null) {
 				console.log(err);
 			}
 			res.send(response.clientToken);
@@ -43,12 +43,12 @@ module.exports = function(app) {
 			amount: '10.00',
 			paymentMethodNonce: nonce,
 		}, function (error, result) {
-			if (error != null) { // is this right?
-				console.log(error)
+			if (error !== null) { // is this right?
+				console.log(error);
 			}
 
 			// What to do with result?
 
-		})
+		});
 	});
 };

@@ -18,6 +18,9 @@ Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hamps
 North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,
 South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming'''.split(',')
 
+questions = ['who is your senator?', 'which congressman is this?', 'who is your representative?', 'how many of these officials are in the house?',
+            'how many of these officials are in the senate?']
+
 
 # returns all the congressmen who represent and area given a latitude and longitude
 def get_data_by_loc(lat, long, data_type):
@@ -77,6 +80,13 @@ def getImageByID(bio_guideID):
     soup = BeautifulSoup(urllib.urlopen(govtrack_baseURL + str(curOfficial['govtrack_id'])))
     return {'image' : 'https://www.govtrack.us' + soup.find('img', attrs = {'class': 'img-responsive'}).get('src')}
 
+
+def getBasicQuestion():
+    question = random.choice(questions)
+    return {
+        'type' : 'basic',
+        'question': question,
+    }
 
 
 # calls a function earlier in the program

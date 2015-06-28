@@ -1,6 +1,11 @@
 .content {
 
 }
+
+.body{
+
+}
+
 .undecorated-link:hover {
 	text-decoration: none;
 }
@@ -15,7 +20,7 @@
 }
 
 .main_header{
-    background-color: forestgreen;
+    background-color: #330066;
 }
 
 .header_button_txt{
@@ -37,7 +42,7 @@
 
 .header_top h1 {
     text-align: center;
-    width: 100%;
+    width:calc(100% - 60px);
     color: white;
     background: rgba(0,0,0,0.5);
     padding: 30px;
@@ -46,6 +51,35 @@
     font-size: 650%;
     font-weight:100;
     text-shadow: 0px 0px 10px black;
+}
+
+.header_top .md-button {
+    position: absolute;
+    z-index: 100;
+    top: 65vh;
+    font-size:35px;
+    width:100%;
+    padding:50px;
+    box-sizing:border-box;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.header_top a {
+    text-decoration:none;
+    color: forestgreen;
+    text-shadow:1px 3px 3px black;
+
+    transition:text-shadow 0.3s;
+}
+.header_top:hover a {
+}
+
+.main_header section div {
+    text-align: right;
+}
+.main_header section div a {
+    display: inline-block;
 }
 
 .home-box {

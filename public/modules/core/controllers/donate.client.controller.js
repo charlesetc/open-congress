@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('core')
 .controller('DonateController', ['$scope', '$http',
 	function($scope, $http) {
@@ -15,7 +13,7 @@ angular.module('core')
 
       $http({
         method: 'GET',
-        url: 'http://localhost:3000/client_token'
+        url: '/client_token'
       }).success(function (data) {
 
         console.log(data);
@@ -30,7 +28,7 @@ angular.module('core')
 
             $http({
               method: 'POST',
-              url: 'http://localhost:3000/payment-methods',
+              url: '/payment-methods',
               data: {
                 amount: $scope.amount,
                 payment_method_nonce: nonce
