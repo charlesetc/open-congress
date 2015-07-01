@@ -128,10 +128,10 @@ def getBasicQuestion(address):
     correct_answer = None
     curFunc = None
     if(question['type'] == 'house'):
-        correct_answer = filterDictByElement(getRepsByAddress(address)['results'], 'house')[0]
+        correct_answer = random.choice(filterDictByElement(getRepsByAddress(address)['results'], 'house'))
         curFunc = getRandomInHouse
     elif(question['type'] == 'senate'):
-        correct_answer = filterDictByElement(getRepsByAddress(address)['results'], 'senate')[0]
+        correct_answer = random.choice(filterDictByElement(getRepsByAddress(address)['results'], 'senate'))
         curFunc = getRandomInSenate
     else:
         correct_answer = getRepsByAddress(address)['results'][0]
