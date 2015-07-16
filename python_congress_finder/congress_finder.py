@@ -127,16 +127,20 @@ def getBasicQuestion(address):
     question = random.choice(questions)
     correct_answer = None
     curFunc = None
-    if(question['type'] == 'house'):
+    if question['type'] == 'house':
         correct_answer = random.choice(filterDictByElement(getRepsByAddress(address)['results'], 'house'))
         curFunc = getRandomInHouse
-    elif(question['type'] == 'senate'):
+    elif question['type'] == 'senate':
         correct_answer = random.choice(filterDictByElement(getRepsByAddress(address)['results'], 'senate'))
         curFunc = getRandomInSenate
-    else:
+    elif question['answer_type'] == 'string':
         correct_answer = getRepsByAddress(address)['results'][0]
         curFunc = getRandomAny
+    else:
+        correct_answer = getRandomAny()
+        curFunc = getRandomAny
 
+    #Do the anti-duplicates code in here!
     options = [correct_answer]
 
     for i in range(0, int(question['num']) - 1):
