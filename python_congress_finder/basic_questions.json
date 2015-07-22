@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Who is your senator?",
+    "type": "senate",
+    "answer_type": "string",
+    "num": "10"
+  },
+  {
+    "name": "Which congressman is this?",
+    "type": "house",
+    "answer_type": "string",
+    "num": "10"
+  },
+  {
+    "name": "Who is your public official?",
+    "answer_type": "string",
+    "type": null,
+    "num": "10"
+  },
+  {
+    "name": "How many of these officials are in the house?",
+    "answer_type": "number",
+    "chamber": "house",
+    "type": null,
+    "num": "5"
+  },
+  {
+    "name": "How many of these officials are in the senate?",
+    "answer_type": "number",
+    "chamber": "senate",
+    "type": null,
+    "num": "5"
+  }
+]

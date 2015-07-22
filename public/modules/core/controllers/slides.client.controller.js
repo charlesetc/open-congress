@@ -1,5 +1,7 @@
 'use strict';
 
+/* global _ */
+
 var times = 0;
 
 function shuffle(o) {
@@ -15,15 +17,15 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 
 		$scope.question = 'Are you ready to play?';
 
-		user = $scope.authentication.user;
+		var user = $scope.authentication.user;
 
 		console.log(user);
 
 
-		var address = user.address + " " + user.city + ", " + user.state + " " + user.zip;
+		var address = user.address + ' ' + user.city + ', ' + user.state + ' ' + user.zip;
 
 		$scope.choices = ['Yes', 'No'];
-    $scope.pics = []
+    $scope.pics = [];
 		$scope.other_choices = $scope.choices.slice(0);
 
     $scope.toastPosition = {
@@ -62,8 +64,8 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 			if ('0' === $scope.choice) {
         $scope.correctToast();
 				times++;
-        $scope.color = "true";
-        setTimeout((function () { $scope.color = null }), 300)
+        $scope.color = 'true';
+        setTimeout(function () { $scope.color = null; }, 300);
 
 				$http.get('/congress/getBasicQuestion/' + address)
 				.success(function (data,status,headers,config) {
@@ -71,12 +73,12 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 					// shuffle($scope.choices);s
           $scope.question = data.question_name;
 					$scope.choices = data.choice_list.slice(0,5);
-          var pics = _.map(data.options, (function (item) {
+          var pics = _.map(data.options, function (item) {
             var output = {};
             output.name = item.first_name + ' ' + item.last_name;
             output.image = item.image;
             return output;
-          })).slice(0,5);
+          }).slice(0,5);
           if (data.question_name === 'Which congressman is this?') {
             pics = pics.slice(0,1);
             $scope.no_name = true;
@@ -91,14 +93,13 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 
 				})
 				.error(function (data,status,headers,config) {
-					console.log("ERROR");
-					console.log(JSON.stringify(data));
+					console.log('error!', JSON.stringify(data));
 				});
 
 
 			} else {
           $scope.wrongToast();
 			}
-		}
+		};
 	}
 ]);

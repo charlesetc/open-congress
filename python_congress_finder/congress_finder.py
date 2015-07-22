@@ -1,6 +1,6 @@
 from geopy import geocoders
 from bs4 import BeautifulSoup
-import random, sys, json, urllib
+import os, random, sys, json, urllib
 
 gmaps = geocoders.GoogleV3()
 
@@ -18,33 +18,7 @@ Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hamps
 North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,
 South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming'''.split(',')
 
-questions = [{'name' : 'Who is your senator?',
-              'type' : 'senate',
-              'answer_type' : 'string',
-              'num' : '10'},
-
-              {'name': 'Which congressman is this?',
-              'type' : 'house',
-              'answer_type' : 'string',
-              'num' : '10'},
-
-              {'name' : 'Who is your public official?',
-                'answer_type' : 'string',
-                'type' : None,
-                'num' : '10'},
-
-              {'name' : 'How many of these officials are in the house?',
-              'answer_type' : 'number',
-              'chamber':'house',
-               'type' : None,
-               'num' : '5'},
-
-              {'name' : 'How many of these officials are in the senate?',
-              'answer_type' : 'number',
-              'chamber' : 'senate',
-               'type' : None,
-               'num' : '5'}]
-
+basic_questions = json.loads(open(os.path.join(os.path.dirname(__file__), 'basic_questions.json'), 'r').read())
 
 # returns all the congressmen who represent and area given a latitude and longitude
 def get_data_by_loc(lat, long, data_type):
@@ -57,10 +31,12 @@ def getRepsByAddress(address):
     rep_results = get_data_by_loc(coords[0], coords[1], 'legislators')
     return rep_results
 
+# returns congressman based on name
 def getRepByName(first_name, last_name):
     rep_str = 'first_name=FNAME&last_name=LNAME&in_office=true&'.replace('FNAME', first_name).replace('LNAME', last_name)
     return json.load(urllib.urlopen(leg_baseURL + rep_str + API_KEY))
 
+# returns congressman based on bio_guideID
 def getRepByID(bio_guideID):
     id_str = 'bioguide_id=CUR_ID&'.replace('CUR_ID', str(bio_guideID))
     return json.load(urllib.urlopen(leg_baseURL + id_str + API_KEY))
@@ -113,8 +89,8 @@ def getImageByID(bio_guideID):
     soup = BeautifulSoup(urllib.urlopen(govtrack_baseURL + str(curOfficial['govtrack_id'])))
     return {'image' : 'https://www.govtrack.us' + soup.find('img', attrs = {'class': 'img-responsive'}).get('src')}
 
-
-def filterDictByElement(in_list, key):
+#filters a dictionary
+def filterChamberByElement(in_list, key):
     out_list = []
     for i in range(0, len(in_list)):
         if(in_list[i].get('chamber') == key):
@@ -124,27 +100,28 @@ def filterDictByElement(in_list, key):
 # gets a question session, first result is correct by convention
 def getBasicQuestion(address):
     acc = 0
-    question = random.choice(questions)
-    correct_answer = None
     curFunc = None
+    correct_answer = None
+
+    question = random.choice(basic_questions)
+
     if(question['type'] == 'house'):
-        correct_answer = random.choice(filterDictByElement(getRepsByAddress(address)['results'], 'house'))
+        correct_answer = random.choice(filterChamberByElement(getRepsByAddress(address)['results'], 'house'))
         curFunc = getRandomInHouse
     elif(question['type'] == 'senate'):
-        correct_answer = random.choice(filterDictByElement(getRepsByAddress(address)['results'], 'senate'))
+        correct_answer = random.choice(filterChamberByElement(getRepsByAddress(address)['results'], 'senate'))
         curFunc = getRandomInSenate
     else:
-        correct_answer = getRepsByAddress(address)['results'][0]
+        correct_answer = random.choice(getRepsByAddress(address)['results'])
         curFunc = getRandomAny
 
-    options = [correct_answer]
+    options = [correct_answer] #By convention the correct answer is always first in the list when returned from the api
 
-    for i in range(0, int(question['num']) - 1):
+    for i in range(0, int(question['num']) - 1): # removes duplicates
         options.append(curFunc())
 
-    #options = list(set(options))
-
     out_list = []
+
     for i in range(0, len(options)):
         tmp_dict = {}
         tmp_dict = {
@@ -156,7 +133,7 @@ def getBasicQuestion(address):
         tmp_dict['image'] = 'https://www.govtrack.us/data/photos/' + options[i].get('govtrack_id') + '-200px.jpeg'
         out_list.append(tmp_dict)
 
-        choice_list = []
+    choice_list = []
 
     if question['answer_type'] == 'number':
         acc = 0
@@ -184,6 +161,7 @@ def getBasicQuestion(address):
 
 
 # calls a function earlier in the program
+# passes to MEAN application for rendering and display to the user
 def main():
     if len(sys.argv) > 1:
         funcs = {

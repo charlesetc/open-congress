@@ -1,5 +1,7 @@
 'use strict';
 
+/* global braintree */
+
 angular.module('core')
 .controller('DonateController', ['$scope', '$http',
 	function($scope, $http) {
