@@ -141,12 +141,14 @@ def getBasicQuestion(address):
         curFunc = getRandomAny
 
     #Do the anti-duplicates code in here!
+    addedCongressmen = []
     options = [correct_answer]
 
     for i in range(0, int(question['num']) - 1):
-        options.append(curFunc())
-
-    #options = list(set(options))
+        curCongressman = curFunc()
+        if curCongressman.get('bioguide_id') not in addedCongressmen:
+            addedCongressmen.append(curCongressman.get('bioguide_id'))
+            options.append(curCongressman)
 
     out_list = []
     for i in range(0, len(options)):
