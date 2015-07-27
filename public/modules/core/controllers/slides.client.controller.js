@@ -87,13 +87,12 @@ angular.module('core').controller('SlidesController', ['$scope', '$document', '$
 
 					$scope.other_choices = $scope.choices.slice(0);
 
+
 					shuffle($scope.choices);
-
-          $scope.choice = String($scope.other_choices.indexOf($scope.choices[0]));
-
+          shuffle($scope.pics);
 				})
 				.error(function (data,status,headers,config) {
-					console.log('error!', JSON.stringify(data));
+					console.log(JSON.stringify(data));
 				});
 
 

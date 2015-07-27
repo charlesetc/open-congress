@@ -97,6 +97,13 @@ def filterChamberByElement(in_list, key):
             out_list.append(in_list[i])
     return out_list
 
+def getUniqueOfficial(bioList, curFunc):
+    curOfficial = curFunc()
+    if(curOfficial.get('bioguide_id') not in bioList):
+        return curOfficial
+    else:
+        return getUniqueOfficial(bioList, curFunc)
+
 # gets a question session, first result is correct by convention
 def getBasicQuestion(address):
     acc = 0
@@ -117,8 +124,12 @@ def getBasicQuestion(address):
 
     options = [correct_answer] #By convention the correct answer is always first in the list when returned from the api
 
+    bioList = [options[0].get('bioguide_id')]
+
+
     for i in range(0, int(question['num']) - 1): # removes duplicates
-        options.append(curFunc())
+        options.append(getUniqueOfficial(bioList, curFunc))
+        bioList.append(options[i + 1].get('bioguide_id'))
 
     out_list = []
 
@@ -156,7 +167,7 @@ def getBasicQuestion(address):
         'answer_type' : question['answer_type'],
         'choice_list' : choice_list,
         'question_name': question['name'],
-        'options' : out_list
+        'options' : out_list,
     }
 
 
